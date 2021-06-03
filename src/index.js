@@ -3,11 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import '../node_modules/bootstrap/dist/js/bootstrap'
+import '../node_modules/jquery/dist/jquery'
+import '../node_modules/bootstrap/dist/css/bootstrap.css'
+import { createStore,applyMiddleware } from 'redux';
+import { appstate } from './Redux/Reducers/combine';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk'
+import { callPeopleApi } from './Redux/Actions/PeopleActions';
 
+const mystore=createStore(appstate,applyMiddleware(thunk))
+mystore.dispatch(callPeopleApi())
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={mystore}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
